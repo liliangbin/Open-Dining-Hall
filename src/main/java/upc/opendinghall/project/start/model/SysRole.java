@@ -1,5 +1,7 @@
 package upc.opendinghall.project.start.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
  */
 
 @Entity
-public class SysRole  implements Serializable {
+public class SysRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,11 +26,13 @@ public class SysRole  implements Serializable {
     //角色----权限关系 。多对多的关系。
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "SysRolePermission", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "permissionId")})
+    @JsonIgnore
     private List<SysPermission> permissions;
 
     //用户--角色关系定义
     @ManyToMany
-    @JoinTable(name = "SysUserRole",joinColumns = {@JoinColumn(name = "roleId")},inverseJoinColumns = {@JoinColumn(name = "userId")})
+    @JoinTable(name = "SysUserRole", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "userId")})
+    @JsonIgnore
     private List<UserInfo> userInfos;
 
     public long getId() {
@@ -63,20 +67,22 @@ public class SysRole  implements Serializable {
         this.available = available;
     }
 
+    @JsonIgnore
     public List<SysPermission> getPermissions() {
         return permissions;
     }
+
     public void setPermissions(List<SysPermission> permissions) {
         this.permissions = permissions;
     }
 
-    //@JsonIgnore
+    @JsonIgnore
     public List<UserInfo> getUserInfos() {
         return userInfos;
     }
 
-//@JsonBackReference
-
+    //@JsonBackReference
+    @JsonIgnore
     public void setUserInfos(List<UserInfo> userInfos) {
         this.userInfos = userInfos;
     }

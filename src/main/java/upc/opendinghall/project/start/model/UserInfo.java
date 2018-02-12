@@ -1,5 +1,7 @@
 package upc.opendinghall.project.start.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -21,12 +23,12 @@ public class UserInfo implements Serializable {
     private String username;//账号
     private String name;//昵称或是真实的名字。
     private String password;//密码
-    private String salt ;//加密密码的盐；
+    private String salt;//加密密码的盐；
     private byte state;//用户状态的，0创建未认证，（比如，没有激活，没有输入验证码等等）--等待用户的验证  1，正常的状态，2，用户被锁定
     private String gender;
     private String tel;//唯一的一个东西，作为最重要的东西来弄
     private String location;
-    private String  portraitURL;
+    private String portraitURL;
 
 
     public String getGender() {
@@ -64,6 +66,7 @@ public class UserInfo implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)//立即重数据库中加载数据。
     @JoinTable(name = "SysUserRole", joinColumns = {@JoinColumn(name = "userId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
+    @JsonIgnore
     private List<SysRole> roleList;//一个用户具有多个角色
 
     public long getUid() {
@@ -114,10 +117,11 @@ public class UserInfo implements Serializable {
         this.state = state;
     }
 
-
+    @JsonIgnore
     public List<SysRole> getRoleList() {
         return roleList;
     }
+
     public void setRoleList(List<SysRole> roleList) {
         this.roleList = roleList;
     }

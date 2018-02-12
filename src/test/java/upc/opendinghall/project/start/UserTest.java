@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import upc.opendinghall.project.start.model.UserInfo;
 import upc.opendinghall.project.start.repository.UserInfoRepository;
 import upc.opendinghall.project.start.service.UserInfoService;
+import upc.opendinghall.project.start.util.JwtTokenUtil;
 import upc.opendinghall.project.start.util.MyUtils;
 
 /**
@@ -19,10 +20,15 @@ import upc.opendinghall.project.start.util.MyUtils;
 @SpringBootTest
 public class UserTest {
 
+    final  String token = "eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTE4NDIwMzM4NTE2LCJ0ZWwiOiIxNzg1NDIyNjk4NCIsImV4cCI6MTUxOTAyNTEzOCwidXNlcm5hbWUiOiJhZG1pbiJ9.LLnw93Ktt-JgBdkhPY9g-qWHexWQ9V_jh_duKt31YMwTNeAMfKETOOJWlpaXwMdHrPT_PbN5X8od8ll52V_xBw";
     @Autowired
     private UserInfoService userInfoService;
     @Autowired
     private UserInfoRepository userInfoRepository;
+
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @Test
     public void register() {
@@ -36,6 +42,23 @@ public class UserTest {
         userInfo.setPassword(nam);
         userInfoRepository.save(userInfo);
 
+    }
+
+
+    @Test
+    public void  filter (){
+
+   String tel =     jwtTokenUtil.getTelFromToken(token);
+
+        System.out.println(tel);
+    }
+
+    @Test
+    public void  ff(){
+     UserInfo userInfo=   userInfoService.findByUsername("admin");
+        userInfo.getRoleList();
+
+        System.out.println(userInfo);
     }
 
 }

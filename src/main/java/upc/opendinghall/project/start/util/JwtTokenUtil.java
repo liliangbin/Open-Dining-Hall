@@ -67,7 +67,7 @@ public class JwtTokenUtil implements Serializable {
         return claims;
     }
 
-    public String getUsernameFromTocken(String token) {
+    public String getUsernameFromToken(String token) {
         String username;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -79,15 +79,16 @@ public class JwtTokenUtil implements Serializable {
         return username;
     }
 
-    public String getTelFromTocken(String token) {
+    public String getTelFromToken(String token) {
         String Tel;
         try {
             final Claims claims = getClaimsFromToken(token);
+            System.out.println("通过token  查询  tel");
             Tel = claims.get(CLAIM_KEY_TEL).toString();
         } catch (Exception e) {
             Tel = null;
         }
-
+        System.out.println("在  filter 中的  tel值" + Tel);
         return Tel;
     }
 
@@ -132,7 +133,7 @@ public class JwtTokenUtil implements Serializable {
     }
     public Boolean validateToken(String token, JwtUser userDetails) {
         JwtUser user = (JwtUser) userDetails;
-        final String tel = getTelFromTocken(token);
+        final String tel = getTelFromToken(token);
         final Date created = getCreatedDateFromToken(token);
         //final Date expiration = getExpirationDateFromToken(token);
 

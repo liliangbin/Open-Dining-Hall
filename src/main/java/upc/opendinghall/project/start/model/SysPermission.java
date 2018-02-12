@@ -1,5 +1,7 @@
 package upc.opendinghall.project.start.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -33,7 +35,7 @@ public class SysPermission implements Serializable {
     @ManyToMany
 
     @JoinTable(name = "SysRolePermission", joinColumns = {@JoinColumn(name = "permissionId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
-
+    @JsonIgnore
     private List<SysRole> roles;
 
     public static long getSerialVersionUID() {
@@ -104,7 +106,7 @@ public class SysPermission implements Serializable {
         this.available = available;
     }
 
-    //  @JsonBackReference
+    @JsonIgnore
     public List<SysRole> getRoles() {
         return roles;
     }

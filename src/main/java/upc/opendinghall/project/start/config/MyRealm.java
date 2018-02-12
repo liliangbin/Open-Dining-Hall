@@ -31,6 +31,7 @@ public class MyRealm extends AuthorizingRealm {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
     /**
      * 大坑！，必须重写此方法，不然Shiro会报错
      */
@@ -45,8 +46,8 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 
-        String username = jwtTokenUtil.getUsernameFromTocken(principals.toString());
-        System.out.println(principals.toString()  +  "这是一个传入的参数"  + " 应该是等于 admin");
+        String username = jwtTokenUtil.getUsernameFromToken(principals.toString());
+        System.out.println(principals.toString() + "这是一个传入的参数" + " 应该是等于 admin");
         System.out.println("当需要权限的时候 就会调用我了");
         UserInfo userInfo = service.findByUsername(username);
 
@@ -70,6 +71,7 @@ public class MyRealm extends AuthorizingRealm {
             }
 
         }
+        authorizationInfo.addRole("admin");
         return authorizationInfo;
 
 
@@ -83,10 +85,11 @@ public class MyRealm extends AuthorizingRealm {
         String token = (String) auth.getCredentials();
         // 解密获得username，用于和数据库进行对比
 
-        System.out.println( "用户登录认证 :"+token);
+        System.out.println("用户登录认证 :" + token);
 
-        String username = jwtTokenUtil.getUsernameFromTocken(token);
+        String username = jwtTokenUtil.getUsernameFromToken(token);
 
+        System.out.println("username : ====>" +username);
         if (username == null) {
             throw new AuthenticationException("token invalid");
         }

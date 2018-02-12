@@ -31,8 +31,21 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String authToken = request.getHeader("Authorization");
-        String Tel = jwtTokenUtil.getTelFromTocken(authToken);
-        String username = jwtTokenUtil.getUsernameFromTocken(authToken);
+        System.out.println("传入的token是 " + authToken);
+        AccessToken token = new AccessToken(authToken);
+        getSubject(request, response).login(token);
+        System.out.println("登陆成功");
+        System.out.println("token =====>" + authToken);
+        try {
+            String Tel = jwtTokenUtil.getTelFromToken(authToken);
+            System.out.println("电话号码是：" + Tel);
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage()  + "jwttokenutil");
+        }
+        //System.out.println("tel ====>" + Tel);
+   /*     String Tel = jwtTokenUtil.getTelFromToken(authToken);
+        String username = jwtTokenUtil.getUsernameFromToken(authToken);
 
         //这个问题后面来改  只能是通过某个参数看另外一个参数是否正确
         //这里应该只能是通过  Tel  来数据库找username  再用下面这个方法来验证其中的username的正确性。
@@ -44,7 +57,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 getSubject(request, response).login(token);
                 System.out.println("登陆成功");
             }
-        }
+        }*/
+
         chain.doFilter(request, response);
 
 

@@ -42,7 +42,7 @@ public class AuthController {
 
         if (userInfo.getPassword().equals(secret)) {
 
-            JwtUser jwtUser = new JwtUser(userInfo.getTel(), username);
+            JwtUser jwtUser = new JwtUser( username,userInfo.getTel());
             final String token = jwtTokenUtil.generateToken(jwtUser);
 
             System.out.println("发放token  ：" + token);
