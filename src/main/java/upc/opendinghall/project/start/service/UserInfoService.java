@@ -2,6 +2,7 @@ package upc.opendinghall.project.start.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import upc.opendinghall.project.start.dto.JwtUser;
 import upc.opendinghall.project.start.model.SysPermission;
 import upc.opendinghall.project.start.model.SysRole;
 import upc.opendinghall.project.start.model.UserInfo;
@@ -25,7 +26,7 @@ public class UserInfoService {
             for (SysRole role : userInfo.getRoleList()) {
                 role.setUserInfos(null);
                 Iterable<SysPermission> sysPermissions = role.getPermissions();
-                for(SysPermission sysPermission : role.getPermissions()){
+                for (SysPermission sysPermission : role.getPermissions()) {
                     sysPermission.setRoles(null);
                 }
             }
@@ -33,4 +34,6 @@ public class UserInfoService {
         return userInfo;
 
     }
+
+
 }

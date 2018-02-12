@@ -8,6 +8,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import upc.opendinghall.project.start.util.JwtAuthenticationTokenFilter;
+import upc.opendinghall.project.start.util.JwtFilter;
 
 import javax.servlet.Filter;
 import java.util.HashMap;

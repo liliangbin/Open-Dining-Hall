@@ -9,4 +9,5 @@ import upc.opendinghall.project.start.model.UserInfo;
  */
 public interface UserInfoRepository  extends CrudRepository<UserInfo,Long>{
     public UserInfo findByUsername(String username);
+
 }

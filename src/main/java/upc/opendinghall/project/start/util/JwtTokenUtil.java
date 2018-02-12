@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import upc.opendinghall.project.start.dto.JwtUser;
 
@@ -28,10 +29,10 @@ public class JwtTokenUtil implements Serializable {
     private static final String CLAIM_KEY_USERNAME = "username";
 
     @Value("${jwt.secret}")
-    private String secret;
+    private  String secret;
 
     @Value("${jwt.expiration}")
-    private Long expiration;
+    private  Long expiration;
 
     private Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
@@ -45,7 +46,8 @@ public class JwtTokenUtil implements Serializable {
         return generateToken(claims);
     }
 
-    String generateToken(Map<String, Object> claims) {
+
+    public String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
@@ -54,7 +56,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
 
-    private Claims getClaimsFromToken(String token) {
+    public  Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
             claims = Jwts.parser()
@@ -67,7 +69,8 @@ public class JwtTokenUtil implements Serializable {
         return claims;
     }
 
-    public String getUsernameFromToken(String token) {
+
+    public  String getUsernameFromToken(String token) {
         String username;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -79,7 +82,7 @@ public class JwtTokenUtil implements Serializable {
         return username;
     }
 
-    public String getTelFromToken(String token) {
+    public  String getTelFromToken(String token) {
         String Tel;
         try {
             final Claims claims = getClaimsFromToken(token);
@@ -131,16 +134,28 @@ public class JwtTokenUtil implements Serializable {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
+
     public Boolean validateToken(String token, JwtUser userDetails) {
         JwtUser user = (JwtUser) userDetails;
         final String tel = getTelFromToken(token);
         final Date created = getCreatedDateFromToken(token);
         //final Date expiration = getExpirationDateFromToken(token);
 
-        return ( tel.equals(user.getTel())
+        return (tel.equals(user.getTel())
 
                 && !isTokenExpired(token)
         );
     }
 
+
+    public static String name( String secret) {
+        return "wu;a;;a" + secret;
+
+
+    }
+
+    public String name1( String secret){
+
+        return "  不是静态的方法" + secret;
+    }
 }
