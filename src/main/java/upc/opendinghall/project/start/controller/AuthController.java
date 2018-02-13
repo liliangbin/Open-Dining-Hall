@@ -1,5 +1,7 @@
 package upc.opendinghall.project.start.controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,11 @@ public class AuthController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", dataType = "String", required = true),
+            @ApiImplicitParam(name = "password", value = "密码", dataType = "String", required = true)
+    } )
     @PostMapping("/login")
     public Object login(HttpServletRequest request, HttpServletResponse response) {
 
